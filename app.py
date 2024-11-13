@@ -33,7 +33,7 @@ if uploaded_file:
                 if cell.data_type == 'f':  # 'f' indicates a formula
                     row_data.append(f"= {cell.value}")  # Display formula
                 else:
-                    row_data.append(cell.value)  # Display cell value if no formula
+                    row_data.append(cell.value if cell.value is not None else "")  # Replace None with empty string
             data.append(row_data)
 
         # Create a DataFrame for display
@@ -43,5 +43,5 @@ if uploaded_file:
         if 'Unnamed: 0' in df.columns:
             df = df.drop(columns=['Unnamed: 0'])
         
-        # Convert the DataFrame to an HTML table
+        # Convert the DataFrame to an HTML table and display it
         st.markdown(df.to_html(index=False), unsafe_allow_html=True)
