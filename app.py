@@ -36,13 +36,12 @@ if uploaded_file:
                     row_data.append(cell.value)  # Display cell value if no formula
             data.append(row_data)
 
-        # Create a DataFrame and set data types to object to avoid pyarrow issues
+        # Create a DataFrame for display
         df = pd.DataFrame(data, columns=[str(col[0].value) for col in sheet.iter_cols(1, sheet.max_column, 1, 1)])
-        df = df.astype(object)  # Convert all cells to object type for compatibility
         
         # Remove 'Unnamed: 0' column if it exists
         if 'Unnamed: 0' in df.columns:
             df = df.drop(columns=['Unnamed: 0'])
         
-        # Display the DataFrame with values and formulas
-        st.dataframe(df)
+        # Display the DataFrame using st.table to bypass pyarrow issues
+        st.table(df)
