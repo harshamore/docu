@@ -29,10 +29,11 @@ if uploaded_file:
         for row in sheet.iter_rows(values_only=False):  # Access cells, not just values
             row_data = []
             for cell in row:
-                if cell.formula:  # If there’s a formula, display it
-                    row_data.append(f"= {cell.formula}")
+                # Check if the cell contains a formula
+                if cell.data_type == 'f':  # 'f' indicates a formula
+                    row_data.append(f"= {cell.value}")  # Display formula
                 else:
-                    row_data.append(cell.value)
+                    row_data.append(cell.value)  # Display cell value if no formula
             data.append(row_data)
 
         # Create a DataFrame for display
@@ -44,4 +45,3 @@ if uploaded_file:
         
         # Display the DataFrame with values and formulas
         st.dataframe(df)
-
