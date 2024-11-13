@@ -36,8 +36,9 @@ if uploaded_file:
                     row_data.append(cell.value)  # Display cell value if no formula
             data.append(row_data)
 
-        # Create a DataFrame for display
-        df = pd.DataFrame(data, columns=[col[0].value for col in sheet.iter_cols(1, sheet.max_column, 1, 1)])
+        # Create a DataFrame and ensure all values are strings
+        df = pd.DataFrame(data, columns=[str(col[0].value) for col in sheet.iter_cols(1, sheet.max_column, 1, 1)])
+        df = df.astype(str)  # Convert all cells to string format for display compatibility
         
         # Remove 'Unnamed: 0' column if it exists
         if 'Unnamed: 0' in df.columns:
