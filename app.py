@@ -43,5 +43,5 @@ if uploaded_file:
         if 'Unnamed: 0' in df.columns:
             df = df.drop(columns=['Unnamed: 0'])
         
-        # Display the DataFrame using st.table to bypass pyarrow issues
-        st.table(df)
+        # Convert the DataFrame to an HTML table
+        st.markdown(df.to_html(index=False), unsafe_allow_html=True)
